@@ -79,6 +79,7 @@
                             <tr>
                                 <td>{{ $data->cat_title }}</td>
                                 <td>
+                                    <a class="btn btn-info" href="{{ url('edit_category', $data->id) }}">Update</a>
                                     {{-- onclick="confirmation(event)"  --}}
                                      <a  class = "btn btn-danger"
                                      href="{{ url('cat_delete', $data->id) }}">Delete</a>
@@ -95,25 +96,7 @@
 
 
         @include('admin.footer')
-        {{-- <script type="text/javascript" >
-            function confirmation(ev) {
-                ev.preventDefault();
-                var urlToRedirect = ev.currentTarget.getAttribute('href');
-                consoLe.Log(urlToRedirect);
-                swal({
-                        title: "Are you sure to Delete this",
-                        text: "You will not be able to revert this!",
-                        icon: "warning",
-                        buttons: true,
-                        dangerMode: true,
-                    })
-                    .then((willCancel) => {
-                        if (willCancel) {
-                            window.location.href = urlToRedirect;
-                        }
-                    });
-            }
-        </script> --}}
+       
         
 </body>
 

@@ -48,4 +48,25 @@ class AdminController extends Controller
         $data->delete();
         return redirect()->back()->with('massage', 'category deleted Successfully');
     }
+
+    public function edit_category($id)
+    {
+
+
+        $data = Category::find($id);
+        return view('admin.edit_category', compact('data'));
+    }
+
+
+
+    public function update_categpry(Request $request, $id)
+    {
+        $data = Category::find($id);
+        $data->cat_title = $request->cat_name;
+        $data->save();
+
+        return redirect('/category_page')->with('massage', 'category updated Successfully');
+        // return redirect()->route('category_page')
+
+    }
 }
