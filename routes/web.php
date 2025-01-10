@@ -37,6 +37,21 @@ route::get('/edit_category/{id}' , [AdminController::class , 'edit_category']);
 route::post('update_categpry/{id}' ,[AdminController::class , 'update_categpry']);
 
 
+route::get('/add_book' , [AdminController::class , 'add_book']);
+
+route::post('/store_book' , [AdminController::class , 'store_book']);
+
+route::get('/show_book' , [AdminController::class , 'show_book']);
+route::get('/book_delete/{id}' , [AdminController::class , 'book_delete']);
+
+route::get('/edit_book/{id}' , [AdminController::class , 'edit_book']);
+
+route::post('/update_book/{id}' , [AdminController::class , 'update_book']);
+
+
+
+
+
 
 
 

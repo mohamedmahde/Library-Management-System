@@ -51,7 +51,7 @@
             <div class="page-header">
                 <div class="container-fluid">
                     <div class="div_center">
-                        @if (@session()->has('massage'))
+                        @if (session()->has('massage'))
                             <div class = "alert alert-success  ">
                                 <button type="button" class = "close" data-dissmis="alert" aria-hidden="true">x</button>
 
