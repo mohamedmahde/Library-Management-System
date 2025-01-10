@@ -20,7 +20,10 @@ class AdminController extends Controller
             if ($user_type == 'admin') {
                 return view('admin.index');
             } elseif ($user_type == 'user') {
-                return view('home.index');
+
+                $data = Book::all();
+
+                return view('home.index' , compact('data'));
             }
         } else {
 
@@ -81,102 +84,95 @@ class AdminController extends Controller
 
     public function store_book(Request $request)
     {
-$data =new Book;
-$data->title= $request->book_name;
-$data->auther_name= $request->auther_name;
-$data->price= $request->price;
-$data->description= $request->description;
-$data->quantity= $request->quantity;
-$data->category_id= $request->category;
+        $data = new Book;
+        $data->title = $request->book_name;
+        $data->auther_name = $request->auther_name;
+        $data->price = $request->price;
+        $data->description = $request->description;
+        $data->quantity = $request->quantity;
+        $data->category_id = $request->category;
 
 
 
-$book_image= $request->book_img;
-$auther_image = $request->auther_img;
+        $book_image = $request->book_img;
+        $auther_image = $request->auther_img;
 
-if($book_image){
+        if ($book_image) {
 
-    $book_image_name = time().'.'.$book_image->getClientOriginalExtension();
+            $book_image_name = time() . '.' . $book_image->getClientOriginalExtension();
 
-    $request->book_img->move('book' ,  $book_image_name );
-    $data->book_img  = $book_image_name;
+            $request->book_img->move('book',  $book_image_name);
+            $data->book_img  = $book_image_name;
+        }
+        if ($auther_image) {
 
-}
-if($auther_image){
+            $auther_image_name = time() . '.' . $auther_image->getClientOriginalExtension();
 
-    $auther_image_name = time().'.'.$auther_image->getClientOriginalExtension();
-
-    $request->auther_img->move('auther' ,  $auther_image_name );
-    $data->auther_img  = $book_image_name;
-
-}
+            $request->auther_img->move('auther',  $auther_image_name);
+            $data->auther_img  = $book_image_name;
+        }
 
 
 
-$data->save();
-return redirect()->back(); 
-
+        $data->save();
+        return redirect()->back();
     }
 
-    public function show_book(){
-$book = Book::all();
-return view('admin.show_book' , compact('book'));
-
-
+    public function show_book()
+    {
+        $book = Book::all();
+        return view('admin.show_book', compact('book'));
     }
 
     public function book_delete($id)
-{
+    {
 
 
-    $data = Book::find($id);
-    $data->delete();
-    return redirect()->back()->with('massage', 'book deleted successfully');
+        $data = Book::find($id);
+        $data->delete();
+        return redirect()->back()->with('massage', 'book deleted successfully');
+    }
+
+    public function edit_book($id)
+    {
+        $data = Book::find($id);
+
+        $category = Category::all();
+        return view('admin.edit_book', compact('data', 'category'));
+    }
 
 
-}
+    public function update_book(Request $request, $id)
+    {
+        $data = Book::find($id);
+        $data->title = $request->title;
+        $data->auther_name = $request->auther_name;
+        $data->price = $request->price;
+        $data->description = $request->description;
+        $data->quantity = $request->quantity;
+        $data->category_id = $request->category;
 
-public function edit_book($id){
-$data= Book::find($id);
+        $book_image = $request->book_img;
+        $auther_image = $request->auther_img;
 
-$category = Category::all();
-return view('admin.edit_book' ,compact('data' , 'category'));
-}
+        if ($book_image) {
 
+            $book_image_name = time() . '.' . $book_image->getClientOriginalExtension();
 
-public function update_book(Request $request, $id){
-$data =Book::find($id);
-$data->title = $request->title;
-$data->auther_name = $request->auther_name;
-$data->price = $request->price;
-$data->description = $request->description;
-$data->quantity = $request->quantity;
-$data->category_id= $request->category;
+            $request->book_img->move('book',  $book_image_name);
+            $data->book_img  = $book_image_name;
+        }
+        if ($auther_image) {
 
-$book_image= $request->book_img;
-$auther_image = $request->auther_img;
+            $auther_image_name = time() . '.' . $auther_image->getClientOriginalExtension();
 
-if($book_image){
-
-    $book_image_name = time().'.'.$book_image->getClientOriginalExtension();
-
-    $request->book_img->move('book' ,  $book_image_name );
-    $data->book_img  = $book_image_name;
-
-}
-if($auther_image){
-
-    $auther_image_name = time().'.'.$auther_image->getClientOriginalExtension();
-
-    $request->auther_img->move('auther' ,  $auther_image_name );
-    $data->auther_img  = $book_image_name;
-
-}
+            $request->auther_img->move('auther',  $auther_image_name);
+            $data->auther_img  = $book_image_name;
+        }
 
 
 
-$data->save();
-return redirect('/show_book')->with('massage', 'book updated successfully');
-
-}
+        $data->save();
+        return redirect('/show_book')->with('massage', 'book updated successfully');
+    }
 }
