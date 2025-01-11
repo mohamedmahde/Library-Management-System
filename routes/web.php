@@ -50,6 +50,14 @@ route::post('/update_book/{id}' , [AdminController::class , 'update_book']);
 
 
 
+route::get('/book_detalils/{id}' , [HomeController::class , 'book_detalils']);
+
+
+route::get('/borrow_book/{id}' , [HomeController::class , 'borrow_book']);
+
+
+
+
 
 
 
