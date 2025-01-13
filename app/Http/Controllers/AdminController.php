@@ -7,6 +7,8 @@ use App\Models\User;
 
 use App\Models\Category;
 use App\Models\Book;
+use App\Models\Borrow;;
+
 
 
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +25,7 @@ class AdminController extends Controller
 
                 $data = Book::all();
 
-                return view('home.index' , compact('data'));
+                return view('home.index', compact('data'));
             }
         } else {
 
@@ -174,5 +176,12 @@ class AdminController extends Controller
 
         $data->save();
         return redirect('/show_book')->with('massage', 'book updated successfully');
+    }
+
+
+    public function borrow_request()
+    {
+        $data = Borrow::all();
+        return view('admin.borrow_request' , compact('data'));
     }
 }
