@@ -44,8 +44,8 @@
                             <th>Book Title</th>
                             <th>quantity</th>
                             <th>Borrow Status</th>
-
                             <th>Book Image</th>
+                            <th>Change Status</th>
                               @foreach ($data as $data)
     
                             <tr>
@@ -54,12 +54,35 @@
                                 <td>{{ $data->user->phone }}</td>
                                 <td>{{ $data->book->title }}</td>
                                 <td>{{ $data->book->quantity }}</td>
-                                <td>{{ $data->stauts }}</td>
+                                <td>
+
+                                  @if ($data->stauts == 'approved')
+                                  <span style="color: skyblue">{{ $data->stauts }}</span>
+                                    
+                                  @endif
+
+                                  @if ($data->stauts == 'Returned')
+                                  <span style="color: yellow">{{ $data->stauts }}</span>
+                                    
+                                  @endif
+
+                                  @if ($data->stauts == 'Rejected')
+                                  <span style="color: red">{{ $data->stauts }}</span>
+                                    
+                                  @endif
+                                </td>
 
                                 <td>
 
 
                                     <img src="book/{{ $data->book->book_img }}" alt="">
+                                </td>
+
+                                <td>
+
+                                <a class="btn btn-warning" href="{{ url('approve_book',$data->id) }}">Approved</a>
+                                <a class="btn btn-danger" href="{{ url('rejected_book',$data->id) }}">Rejected</a>
+                                <a class="btn btn-info" href="{{ url('return_book',$data->id) }}">Returned</a>
                                 </td>
                             </tr>
                             @endforeach

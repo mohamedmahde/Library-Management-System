@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 
+use App\Models\User;
 use App\Models\Category;
 use App\Models\Book;
 use App\Models\Borrow;;
@@ -182,6 +182,79 @@ class AdminController extends Controller
     public function borrow_request()
     {
         $data = Borrow::all();
-        return view('admin.borrow_request' , compact('data'));
+        return view('admin.borrow_request', compact('data'));
+    }
+
+    public function approve_book($id)
+    {
+
+        $data = Borrow::find($id);
+        $stauts = $data->stauts;
+
+        if ($stauts == 'approved') {
+
+            return redirect()->back();
+        } else {
+
+            $data->stauts = 'approved';
+
+            $data->save();
+    
+            $bookid = $data->book_id;
+    
+            $book = Book::find($bookid);
+    
+            $book_qty = $book->quantity - '1';
+    
+            $book->quantity =  $book_qty;
+    
+            $book->save();
+    
+            return redirect()->back();
+
+        }
+
+       
+    }
+
+    public function return_book($id)
+    {
+
+        $data = Borrow::find($id);
+        $stauts = $data->stauts;
+
+        if ($stauts == 'Returned') {
+
+            return redirect()->back();
+        } else {
+
+            $data->stauts = 'Returned';
+
+            $data->save();
+    
+            $bookid = $data->book_id;
+    
+            $book = Book::find($bookid);
+    
+            $book_qty = $book->quantity + '1';
+    
+            $book->quantity =  $book_qty;
+    
+            $book->save();
+    
+            return redirect()->back();
+
+        }
+
+       
+    }
+
+    public function rejected_book($id){
+        $data =  Borrow::find($id);
+        $data->stauts = 'Rejected';
+        $data->save();
+        return redirect()->back();
+
+
     }
 }

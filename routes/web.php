@@ -57,6 +57,13 @@ route::get('/borrow_book/{id}' , [HomeController::class , 'borrow_book']);
 
 
 route::get('/borrow_request' , [AdminController::class , 'borrow_request']);
+route::get('/approve_book/{id}' , [AdminController::class , 'approve_book']);
+route::get('/return_book/{id}' , [AdminController::class , 'return_book']);
+
+route::get('/rejected_book/{id}' , [AdminController::class , 'rejected_book']);
+
+
+
 
 
 
