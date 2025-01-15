@@ -47,14 +47,24 @@ class HomeController extends Controller
 
                 $borrow->save();
                 return redirect()->back()->with('massage', 'A request send to the admin to borrow this book ');
-
-
             } else {
 
                 return redirect('/login');
             }
         } else {
             return redirect()->back()->with('massage', 'Not enough Book');
+        }
+    }
+
+
+    public function book_history()
+    {
+        if (Auth::id()) {
+
+            $user_id = Auth::user()->id;
+            $data = Borrow::where('user_id' , '=' , $user_id)->get();
+            return view('home.book_history' , compact('data'));
+
         }
     }
 }
