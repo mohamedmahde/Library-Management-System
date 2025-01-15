@@ -66,6 +66,9 @@ route::get('/book_history' , [HomeController::class , 'book_history']);
 route::get('/cancel_req/{id}' , [HomeController::class , 'cancel_req']);
 route::get('/explore' , [HomeController::class , 'explore']);
 
+route::get('/search' , [HomeController::class , 'search']);
+
+
 
 
 
