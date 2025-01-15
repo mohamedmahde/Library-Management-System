@@ -56,6 +56,17 @@
         <div class="container">
             <div class="row">
 
+                @if (session()->has('massage'))
+                    <div class="alert alert-success">
+
+                        {{ session()->get('massage') }}
+
+                        <button type="button" class="close" data-bs-dismiss="alert" aria-hidden="true">x</button>
+
+
+
+                    </div>
+                @endif
 
                 <table class="table_deg">
                     <tr>
@@ -63,6 +74,7 @@
                         <th>Book auher</th>
                         <th>Book Status</th>
                         <th>Image</th>
+                        <th>Cancel Request</th>
                     </tr>
                     @foreach ($data as $data)
                         <tr>
@@ -73,7 +85,15 @@
 
                                 <img class = "book_img" src="book/{{ $data->book->book_img }}" alt="">
                             </td>
+                            <td>
 
+                                @if ($data->stauts == 'Rejected')
+                                    <a class="btn btn-warning" href="{{ url('cancel_req', $data->id) }}">Cancel</a>
+                                @else
+                                    <p style="color:white; font-weight:bold; ">Not allowad</p>
+                                @endif
+
+                            </td>
                         </tr>
                     @endforeach
 

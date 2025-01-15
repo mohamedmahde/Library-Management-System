@@ -62,9 +62,15 @@ class HomeController extends Controller
         if (Auth::id()) {
 
             $user_id = Auth::user()->id;
-            $data = Borrow::where('user_id' , '=' , $user_id)->get();
-            return view('home.book_history' , compact('data'));
-
+            $data = Borrow::where('user_id', '=', $user_id)->get();
+            return view('home.book_history', compact('data'));
         }
+    }
+
+    public function cancel_req($id)
+    {
+        $data = Borrow::find($id);
+        $data->delete();
+        return redirect()->back()->with('book Borrow request cancel succsussfully');
     }
 }
