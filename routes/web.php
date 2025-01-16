@@ -67,6 +67,7 @@ route::get('/cancel_req/{id}' , [HomeController::class , 'cancel_req']);
 route::get('/explore' , [HomeController::class , 'explore']);
 
 route::get('/search' , [HomeController::class , 'search']);
+route::get('/cat_search/{id}' , [HomeController::class , 'cat_search']);
 
 
 
