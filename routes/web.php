@@ -41,7 +41,7 @@ route::get('/add_book' , [AdminController::class , 'add_book']);
 
 route::post('/store_book' , [AdminController::class , 'store_book']);
 
-route::get('/show_book' , [AdminController::class , 'show_book']);
+route::get('/show_book' , [AdminController::class , 'show_book'])->middleware(['auth' , 'admin']);
 route::get('/book_delete/{id}' , [AdminController::class , 'book_delete']);
 
 route::get('/edit_book/{id}' , [AdminController::class , 'edit_book']);
@@ -56,7 +56,7 @@ route::get('/book_detalils/{id}' , [HomeController::class , 'book_detalils']);
 route::get('/borrow_book/{id}' , [HomeController::class , 'borrow_book']);
 
 
-route::get('/borrow_request' , [AdminController::class , 'borrow_request']);
+route::get('/borrow_request' , [AdminController::class , 'borrow_request'])->middleware(['auth' , 'admin']);
 route::get('/approve_book/{id}' , [AdminController::class , 'approve_book']);
 route::get('/return_book/{id}' , [AdminController::class , 'return_book']);
 
