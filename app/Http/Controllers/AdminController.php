@@ -20,7 +20,14 @@ class AdminController extends Controller
         if (Auth::id()) {
             $user_type = Auth::user()->usertype;
             if ($user_type == 'admin') {
-                return view('admin.index');
+
+                $user = User::all()->count();
+                $book = Book::all()->count();
+
+                $Borrow = Borrow::where('stauts', 'approved')->count();
+                $returned = Borrow::where('stauts', 'returned')->count();
+
+                return view('admin.index',  compact('user', 'book' , 'Borrow' , 'returned'));
             } elseif ($user_type == 'user') {
 
                 $data = Book::all();
@@ -199,22 +206,19 @@ class AdminController extends Controller
             $data->stauts = 'approved';
 
             $data->save();
-    
+
             $bookid = $data->book_id;
-    
+
             $book = Book::find($bookid);
-    
+
             $book_qty = $book->quantity - '1';
-    
+
             $book->quantity =  $book_qty;
-    
+
             $book->save();
-    
+
             return redirect()->back();
-
         }
-
-       
     }
 
     public function return_book($id)
@@ -231,30 +235,26 @@ class AdminController extends Controller
             $data->stauts = 'Returned';
 
             $data->save();
-    
+
             $bookid = $data->book_id;
-    
+
             $book = Book::find($bookid);
-    
+
             $book_qty = $book->quantity + '1';
-    
+
             $book->quantity =  $book_qty;
-    
+
             $book->save();
-    
+
             return redirect()->back();
-
         }
-
-       
     }
 
-    public function rejected_book($id){
+    public function rejected_book($id)
+    {
         $data =  Borrow::find($id);
         $data->stauts = 'Rejected';
         $data->save();
         return redirect()->back();
-
-
     }
 }
